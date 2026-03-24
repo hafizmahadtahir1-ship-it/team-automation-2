@@ -1,26 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const body = await req.formData();
+  const formData = await req.formData();
+  const payload = formData.get("payload") as string;
 
-  const payload = JSON.parse(body.get("payload") as string);
+  if (!payload) {
+    return NextResponse.json({ error: "No payload" }, { status: 400 });
+  }
 
-  console.log("Interaction payload:", payload);
+  const data = JSON.parse(payload);
 
-  const action = payload.actions?.[0]?.action_id;
+  const action = data.actions?.[0]?.action_id;
 
-  let responseText = "Unknown action";
+  let text = "Unknown action";
 
   if (action === "approve") {
-    responseText = "Request approved ✅";
+    text = "Request approved ✅";
   }
 
   if (action === "reject") {
-    responseText = "Request rejected ❌";
+    text = "Request rejected ❌";
   }
 
   return NextResponse.json({
     response_type: "ephemeral",
-    text: responseText,
+    replace_original: false,
+    text,
   });
 }
