@@ -2,15 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
-  const payload = formData.get("payload") as string;
+  const payload = JSON.parse(formData.get("payload") as string);
 
-  if (!payload) {
-    return NextResponse.json({ error: "No payload" }, { status: 400 });
-  }
-
-  const data = JSON.parse(payload);
-
-  const action = data.actions?.[0]?.action_id;
+  const action = payload.actions?.[0]?.action_id;
+  const responseUrl = payload.response_url;
 
   let text = "Unknown action";
 
@@ -22,9 +17,17 @@ export async function POST(req: NextRequest) {
     text = "Request rejected ❌";
   }
 
-  return NextResponse.json({
-    response_type: "ephemeral",
-    replace_original: false,
-    text,
+  // Update original Slack message
+  await fetch(responseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      replace_original: true,
+      text,
+    }),
   });
+
+  return NextResponse.json({ ok: true });
 }
