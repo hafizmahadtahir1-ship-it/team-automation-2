@@ -1,24 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
-import { inngest } from "@/inngest/client";
+import { supabase } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
   const body = await req.formData();
+  const text = body.get("text") as string;
+  const channel_id = body.get("channel_id") as string;
 
-  const payload = {
-    text: body.get("text") as string,
-    user_id: body.get("user_id") as string,
-    team_id: body.get("team_id") as string,
-    channel_id: body.get("channel_id") as string,
-    response_url: body.get("response_url") as string,
-  };
-
-  await inngest.send({
-    name: "slack/slash.received",
-    data: payload,
+  // Direct DB insert
+  await supabase.from("requests").insert({
+    template_type: "purchase",
+    title: text,
+    status: "pending",
+    slack_channel_id: channel_id,
   });
 
   return NextResponse.json({
-    response_type: "ephemeral",
-    text: "Processing your request...",
+    response_type: "in_channel",
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*New Approval Request*\n*Details:* ${text}\n*Status:* Pending`,
+        },
+      },
+      {
+        type: "actions",
+        elements: [
+          {
+            type: "button",
+            text: { type: "plain_text", text: "Approve" },
+            style: "primary",
+            action_id: "approve",
+          },
+          {
+            type: "button",
+            text: { type: "plain_text", text: "Reject" },
+            style: "danger",
+            action_id: "reject",
+          },
+        ],
+      },
+    ],
   });
 }
