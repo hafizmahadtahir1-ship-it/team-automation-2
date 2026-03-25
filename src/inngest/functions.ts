@@ -1,7 +1,7 @@
 import { inngest } from "./client";
 import { supabase } from "@/lib/supabase";
 
-// ─── 1. Process Approval (existing) ───────────────────────
+// ─── 1. Process Approval ───────────────────────
 export const processApproval = inngest.createFunction(
   {
     id: "process-approval",
@@ -12,19 +12,19 @@ export const processApproval = inngest.createFunction(
   }
 );
 
-// ─── 2. Smart Nudge (24hr reminder) ───────────────────────
+// ─── 2. Smart Nudge ───────────────────────
 export const smartNudge = inngest.createFunction(
-  { id: "smart-nudge" },
-  { cron: "0 */24 * * *" }, // Every 24 hours
+  {
+    id: "smart-nudge",
+    triggers: [{ cron: "0 */24 * * *" }],
+  },
   async ({ step }: any) => {
-    // Fetch all pending requests older than 24 hours
     const { data: pendingRequests } = await step.run(
       "fetch-pending",
       async () => {
         const cutoff = new Date(
           Date.now() - 24 * 60 * 60 * 1000
         ).toISOString();
-
         return await supabase
           .from("requests")
           .select("*")
@@ -35,7 +35,6 @@ export const smartNudge = inngest.createFunction(
 
     if (!pendingRequests?.data?.length) return;
 
-    // Send nudge for each pending request
     for (const request of pendingRequests.data) {
       await step.run(`nudge-${request.id}`, async () => {
         const team = await supabase
@@ -54,7 +53,7 @@ export const smartNudge = inngest.createFunction(
           },
           body: JSON.stringify({
             channel: request.slack_channel_id,
-            text: `⏰ *Reminder:* Approval request *"${request.title}"* is still pending for 24+ hours. Please take action.`,
+            text: `⏰ *Reminder:* Approval request *"${request.title}"* is pending 24+ hours.`,
           }),
         });
       });
@@ -62,12 +61,13 @@ export const smartNudge = inngest.createFunction(
   }
 );
 
-// ─── 3. Daily Digest (Every morning 9 AM) ─────────────────
+// ─── 3. Daily Digest ─────────────────────────
 export const dailyDigest = inngest.createFunction(
-  { id: "daily-digest" },
-  { cron: "0 9 * * *" }, // Every day at 9 AM UTC
+  {
+    id: "daily-digest",
+    triggers: [{ cron: "0 9 * * *" }],
+  },
   async ({ step }: any) => {
-    // Fetch all teams
     const { data: teams } = await step.run("fetch-teams", async () => {
       return await supabase.from("teams").select("*");
     });
@@ -76,7 +76,6 @@ export const dailyDigest = inngest.createFunction(
 
     for (const team of teams.data) {
       await step.run(`digest-${team.id}`, async () => {
-        // Count pending requests for this team
         const { count } = await supabase
           .from("requests")
           .select("*", { count: "exact", head: true })
@@ -85,7 +84,6 @@ export const dailyDigest = inngest.createFunction(
 
         if (!count || count === 0) return;
 
-        // Send digest to team
         await fetch("https://slack.com/api/chat.postMessage", {
           method: "POST",
           headers: {
@@ -94,15 +92,7 @@ export const dailyDigest = inngest.createFunction(
           },
           body: JSON.stringify({
             channel: "#general",
-            blocks: [
-              {
-                type: "section",
-                text: {
-                  type: "mrkdwn",
-                  text: `📋 *Good Morning! Daily Approval Digest*\n\nYou have *${count} pending approval${count > 1 ? "s" : ""}* waiting for action today.\n\nUse \`/approve\` to create new requests.`,
-                },
-              },
-            ],
+            text: `📋 *Daily Digest:* You have *${count} pending approval${count > 1 ? "s" : ""}* today.`,
           }),
         });
       });
