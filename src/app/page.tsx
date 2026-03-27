@@ -8,17 +8,20 @@ export default function LandingPage() {
   const [loading, setLoading] = useState(false);
 
   const handleWaitlist = async () => {
-    if (!email) return;
-    setLoading(true);
-    // Store in localStorage for now (Supabase integration baad mein)
-    const existing = JSON.parse(localStorage.getItem("waitlist") || "[]");
-    existing.push({ email, date: new Date().toISOString() });
-    localStorage.setItem("waitlist", JSON.stringify(existing));
-    setTimeout(() => {
-      setSubmitted(true);
-      setLoading(false);
-    }, 800);
-  };
+  if (!email) return;
+  setLoading(true);
+
+  const res = await fetch("/api/waitlist", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  if (res.ok || res.status === 409) {
+    setSubmitted(true);
+  }
+  setLoading(false);
+};
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white font-mono overflow-hidden">
