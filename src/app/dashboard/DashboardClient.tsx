@@ -70,6 +70,23 @@ export default function DashboardClient({ requests }: { requests: Request[] }) {
         >
           Export CSV
         </button>
+<button
+  onClick={async () => {
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        team_id: "test", 
+        slack_workspace_id: "test" 
+      }),
+    });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+  }}
+  className="bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs px-4 py-2 rounded-lg transition-all"
+>
+  Upgrade to Pro →
+</button>
       </div>
 
       <div className="px-8 py-8 max-w-6xl mx-auto">
