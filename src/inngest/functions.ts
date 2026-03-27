@@ -99,3 +99,51 @@ export const dailyDigest = inngest.createFunction(
     }
   }
 );
+// ─── 4. Day 12 Trial Nudge ─────────────────────────
+export const trialNudge = inngest.createFunction(
+  {
+    id: "trial-nudge",
+    triggers: [{ cron: "0 9 * * *" }],
+  },
+  async ({ step }: any) => {
+    const { data: teams } = await step.run("fetch-trial-teams", async () => {
+      const day12 = new Date();
+      day12.setDate(day12.getDate() - 12);
+      const day13 = new Date();
+      day13.setDate(day13.getDate() - 11);
+
+      return await supabase
+        .from("teams")
+        .select("*")
+        .eq("subscription_status", "trialing")
+        .gte("created_at", day12.toISOString())
+        .lt("created_at", day13.toISOString());
+    });
+
+    if (!teams?.data?.length) return;
+
+    for (const team of teams.data) {
+      await step.run(`nudge-trial-${team.id}`, async () => {
+        await fetch("https://slack.com/api/chat.postMessage", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${team.bot_token}`,
+          },
+          body: JSON.stringify({
+            channel: "#general",
+            blocks: [
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: `⏰ *Your TeamAutomation trial ends in 2 days!*\n\nUpgrade now for just *$49/mo*.\n\n👉 <https://team-automation.vercel.app/dashboard|Upgrade Now>`,
+                },
+              },
+            ],
+          }),
+        });
+      });
+    }
+  }
+);
