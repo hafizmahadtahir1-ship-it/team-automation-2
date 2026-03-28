@@ -8,9 +8,17 @@ export async function POST(req: NextRequest) {
   const user_id = body.get("user_id") as string;
 
   // User save karo
-  await supabase.from("users").upsert({
-    slack_user_id: user_id,
-  }, { onConflict: "slack_user_id" });
+  const { data: existingUser } = await supabase
+    .from("users")
+    .select("id")
+    .eq("slack_user_id", user_id)
+    .single();
+
+  if (!existingUser) {
+    await supabase.from("users").insert({
+      slack_user_id: user_id,
+    });
+  }
 
   // Request save karo
   await supabase.from("requests").insert({
