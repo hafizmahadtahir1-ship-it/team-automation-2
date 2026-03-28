@@ -3,45 +3,59 @@ import { supabase } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
   const body = await req.formData();
-  const text = body.get("text") as string; // e.g. "@john 7d"
+  const text = body.get("text") as string;
   const slack_user_id = body.get("user_id") as string;
-  const team_id = body.get("team_id") as string;
 
-  // Parse: "@john 7d"
+  // Parse duration
   const parts = text.trim().split(" ");
-  const mentionRaw = parts[0]; // @john or <@U123456>
-  const durationStr = parts[1] || "7d"; // 7d
-
-  // Extract user ID from Slack mention format <@U123456>
-  const delegateSlackId = mentionRaw.replace(/[<@>]/g, "").split("|")[0];
-
-  // Parse duration (7d = 7 days)
+  const durationStr = parts[parts.length - 1];
   const days = parseInt(durationStr.replace("d", "")) || 7;
+
+  // Extract delegate slack ID — handle both <@U123> and plain U123
+  const mentionMatch = text.match(/<@([A-Z0-9]+)/);
+  const plainMatch = text.match(/\b(U[A-Z0-9]{8,})\b/);
+  const delegateSlackId = mentionMatch?.[1] || plainMatch?.[1];
+
+  if (!delegateSlackId) {
+    return NextResponse.json({
+      response_type: "ephemeral",
+      text: "❌ Could not find user. Try: /approve-delegate @username 7d",
+    });
+  }
+
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + days);
 
-  // Find delegator user in DB
+  // Find delegator
   const { data: delegator } = await supabase
     .from("users")
     .select("id")
     .eq("slack_user_id", slack_user_id)
     .single();
 
-  // Find delegate user in DB
-  const { data: delegate } = await supabase
+  // Find or create delegate user
+  let { data: delegate } = await supabase
     .from("users")
     .select("id")
     .eq("slack_user_id", delegateSlackId)
     .single();
 
+  if (!delegate) {
+    const { data: newUser } = await supabase
+      .from("users")
+      .insert({ slack_user_id: delegateSlackId })
+      .select("id")
+      .single();
+    delegate = newUser;
+  }
+
   if (!delegator?.id || !delegate?.id) {
     return NextResponse.json({
       response_type: "ephemeral",
-      text: "❌ User not found. Make sure both users have used the app before.",
+      text: "❌ Something went wrong. Please try again.",
     });
   }
 
-  // Update delegator record
   await supabase
     .from("users")
     .update({
@@ -52,6 +66,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     response_type: "ephemeral",
-    text: `✅ Done! All your approvals will be delegated to <@${delegateSlackId}> for ${days} days (until ${expiry.toDateString()}).`,
+    text: `✅ Done! Approvals delegated for ${days} days (until ${expiry.toDateString()}).`,
   });
 }
