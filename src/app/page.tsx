@@ -229,6 +229,14 @@ export default function LandingPage() {
           <a href="/dashboard" className="hover:text-white/40 transition-colors">
             Dashboard
           </a>
+          {" "}·{" "}
+          <a href="/privacy" className="hover:text-white/40 transition-colors">
+            Privacy Policy
+          </a>
+          {" "}·{" "}
+          <a href="/terms" className="hover:text-white/40 transition-colors">
+            Terms of Service
+          </a>
         </p>
       </footer>
     </div>
