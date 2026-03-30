@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { PHProvider } from "./providers";
 
 export const metadata: Metadata = {
   title: "TeamAutomation",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PHProvider>{children}</PHProvider>
+      </body>
     </html>
   );
 }
