@@ -8,7 +8,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect("https://team-automation.vercel.app?error=no_code");
   }
 
-  // Exchange code for token
   const response = await fetch("https://slack.com/api/oauth.v2.access", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -37,6 +36,38 @@ export async function GET(req: NextRequest) {
     onConflict: "slack_workspace_id",
   });
 
-  // Redirect to dashboard
+  // Welcome message bhejo
+  await fetch("https://slack.com/api/chat.postMessage", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${data.access_token}`,
+    },
+    body: JSON.stringify({
+      channel: data.authed_user?.id || "#general",
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `👋 *Welcome to TeamAutomation!*\n\nYour workspace is now connected. Here's how to get started:\n\n*Create an approval request:*\n\`/approve purchase "MacBook Pro" $1200\`\n\n*Delegate approvals when on vacation:*\n\`/approve-delegate @colleague 7d\`\n\nYou have *14 days free* — no credit card needed. Enjoy! 🚀`,
+          },
+        },
+        {
+          type: "actions",
+          elements: [
+            {
+              type: "button",
+              text: { type: "plain_text", text: "View Dashboard" },
+              url: "https://team-automation.vercel.app/dashboard",
+              style: "primary",
+              action_id: "view_dashboard",
+            },
+          ],
+        },
+      ],
+    }),
+  });
+
   return NextResponse.redirect("https://team-automation.vercel.app/dashboard?installed=true");
 }
