@@ -17,10 +17,14 @@ export default async function DashboardPage() {
           return cookieStore.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
-        },
+  try {
+    cookiesToSet.forEach(({ name, value, options }) => {
+      cookieStore.set(name, value, options);
+    });
+  } catch {
+    // Server Component mein cookie set nahi hoti — ignore
+  }
+},
       },
     }
   );
