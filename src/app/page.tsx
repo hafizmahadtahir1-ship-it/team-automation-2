@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 /* ══════════════════════════════════════════
    PARTICLE CANVAS
 ══════════════════════════════════════════ */
-function CosmicCanvas({ mousePos }) {
+function CosmicCanvas({ mousePos }: { mousePos: { x: number; y: number } }) {
   const canvasRef = useRef(null);
   const mp = useRef({ x: -9999, y: -9999 });
   useEffect(() => { mp.current = mousePos; }, [mousePos]);
