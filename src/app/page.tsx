@@ -1,12 +1,12 @@
 'use client';
+import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 
 type Feature = {
   title: string;
   description: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
 };
-
 type PricingTier = {
   name: string;
   price: string;
