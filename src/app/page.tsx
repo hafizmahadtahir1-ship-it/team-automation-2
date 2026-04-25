@@ -14,7 +14,15 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer, isOpen, onToggle })
       <span>{question}</span>
       <span className="faq-toggle">{isOpen ? '-' : '+'}</span>
     </button>
-    <div className="faq-a" style={{ maxHeight: isOpen ? 500 : 0, opacity: isOpen ? 1 : 0, transition: 'max-height 0.3s cubic-bezier(.4,0,.2,1),opacity 0.3s cubic-bezier(.4,0,.2,1)' }}>
+    <div
+      className="faq-a"
+      style={{
+        maxHeight: isOpen ? 500 : 0,
+        opacity: isOpen ? 1 : 0,
+        transition:
+          "max-height 0.3s cubic-bezier(.4,0,.2,1),opacity 0.3s cubic-bezier(.4,0,.2,1)",
+      }}
+    >
       <p>{answer}</p>
     </div>
   </div>
@@ -44,98 +52,152 @@ const TYPING_PHRASES = [
   "No more approval bottlenecks.",
   "Automate directly in Slack.",
   "Ship faster, always tracked.",
-  "Built for real teams."
+  "Built for real teams.",
 ];
 
 const STATS: Stat[] = [
   { label: "5min setup", value: "0", countTo: 5, duration: 1100 },
   { label: "14-day trial", value: "0", countTo: 14, duration: 1200 },
   { label: "100% Slack-native", value: "0", countTo: 100, duration: 1200 },
-  { label: "$49/mo", value: "0", countTo: 49, duration: 1300 }
+  { label: "$49/mo", value: "0", countTo: 49, duration: 1300 },
 ];
 
 const HOW_STEPS: [string, string, string][] = [
-  ["Connect Slack", "Authorize TeamAutomation to your Slack workspace in a single click.", "🔗"],
-  ["Define Workflows", "Use templates or custom triggers — code or no-code.", "🛠️"],
-  ["Automate Approvals", "Approve requests where your team works: right inside Slack.", "⚡"]
+  [
+    "Connect Slack",
+    "Authorize TeamAutomation to your Slack workspace in a single click.",
+    "🔗",
+  ],
+  [
+    "Define Workflows",
+    "Use templates or custom triggers — code or no-code.",
+    "🛠️",
+  ],
+  [
+    "Automate Approvals",
+    "Approve requests where your team works: right inside Slack.",
+    "⚡",
+  ],
 ];
 
 const FEATURES: Feature[] = [
-  { icon: <span className="ibox">⚡</span>, label: 'Blazingly Fast', desc: '5-min setup and instant Slack integration.' },
-  { icon: <span className="ibox">🔐</span>, label: 'Granular Permissions', desc: 'Role-based approvals and audit tracking.' },
-  { icon: <span className="ibox">🧩</span>, label: 'No-Code Builder', desc: 'Design workflows with drag-and-drop templates.' },
-  { icon: <span className="ibox">🛡️</span>, label: 'Security-First', desc: 'SOC2-ready, secure OAuth, full data isolation.' },
-  { icon: <span className="ibox">📈</span>, label: 'Realtime Insights', desc: 'See history, users, & KPIs live. Export anytime.' },
-  { icon: <span className="ibox">🤝</span>, label: 'Human + API', desc: 'Human approvals, API triggers, full Slackbot.' }
+  {
+    icon: <span className="ibox">⚡</span>,
+    label: "Blazingly Fast",
+    desc: "5-min setup and instant Slack integration.",
+  },
+  {
+    icon: <span className="ibox">🔐</span>,
+    label: "Granular Permissions",
+    desc: "Role-based approvals and audit tracking.",
+  },
+  {
+    icon: <span className="ibox">🧩</span>,
+    label: "No-Code Builder",
+    desc: "Design workflows with drag-and-drop templates.",
+  },
+  {
+    icon: <span className="ibox">🛡️</span>,
+    label: "Security-First",
+    desc: "SOC2-ready, secure OAuth, full data isolation.",
+  },
+  {
+    icon: <span className="ibox">📈</span>,
+    label: "Realtime Insights",
+    desc: "See history, users, & KPIs live. Export anytime.",
+  },
+  {
+    icon: <span className="ibox">🤝</span>,
+    label: "Human + API",
+    desc: "Human approvals, API triggers, full Slackbot.",
+  },
 ];
 
 const PRICING = [
   {
     label: "Starter",
     price: 49,
-    features: ["Unlimited workflows", "Slack native", "Email reports", "SOC2-ready"],
-    cta: "Start trial"
+    features: [
+      "Unlimited workflows",
+      "Slack native",
+      "Email reports",
+      "SOC2-ready",
+    ],
+    cta: "Start trial",
   },
   {
     label: "Growth",
     price: 149,
-    features: ["Everything in Starter", "Custom roles", "Priority support", "Zapier integration"],
-    cta: "Upgrade (Popular)"
+    features: [
+      "Everything in Starter",
+      "Custom roles",
+      "Priority support",
+      "Zapier integration",
+    ],
+    cta: "Upgrade (Popular)",
   },
   {
     label: "Scale",
     price: 499,
-    features: ["All Growth features", "Dedicated CSM", "Audit exports", "On-prem options"],
-    cta: "Contact Sales"
-  }
+    features: [
+      "All Growth features",
+      "Dedicated CSM",
+      "Audit exports",
+      "On-prem options",
+    ],
+    cta: "Contact Sales",
+  },
 ];
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    quote: "Approvals in Slack = more shipping, less waiting. Our team automated 80% of our process in a day.",
+    quote:
+      "Approvals in Slack = more shipping, less waiting. Our team automated 80% of our process in a day.",
     name: "Ava L.",
     company: "Ops Lead, Growthly",
-    img: "https://randomuser.me/api/portraits/women/68.jpg"
+    img: "https://randomuser.me/api/portraits/women/68.jpg",
   },
   {
-    quote: "Auditors loved the full Slack audit trail. Legal loves it, my engineers love it, I love it.",
+    quote:
+      "Auditors loved the full Slack audit trail. Legal loves it, my engineers love it, I love it.",
     name: "Miguel R.",
     company: "CTO, ReFinance",
-    img: "https://randomuser.me/api/portraits/men/32.jpg"
+    img: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
-    quote: "From click to production in 10 minutes. The experience is absurdly slick and easy.",
+    quote:
+      "From click to production in 10 minutes. The experience is absurdly slick and easy.",
     name: "Priya S.",
     company: "Product, Fintic",
-    img: "https://randomuser.me/api/portraits/women/91.jpg"
-  }
+    img: "https://randomuser.me/api/portraits/women/91.jpg",
+  },
 ];
 
 const FAQ: [string, string][] = [
   [
     "Is it really Slack-only?",
-    "Yes, TeamAutomation is built from the ground up for Slack. All approvals, notifications, and workflows live right in your workspace."
+    "Yes, TeamAutomation is built from the ground up for Slack. All approvals, notifications, and workflows live right in your workspace.",
   ],
   [
     "Is my data secure?",
-    "Absolutely. We're SOC2-ready, use strict isolation, and never access your messages unless for approvals you explicitly configure."
+    "Absolutely. We're SOC2-ready, use strict isolation, and never access your messages unless for approvals you explicitly configure.",
   ],
   [
     "Can I build custom workflows?",
-    "Yes—use no-code templates or code for advanced logic. API/webhook triggers supported. Reach out for open API docs."
+    "Yes—use no-code templates or code for advanced logic. API/webhook triggers supported. Reach out for open API docs.",
   ],
   [
     "How does billing work?",
-    "Simple! After your 14-day free trial, choose a monthly plan. Scale up or down anytime from your dashboard."
+    "Simple! After your 14-day free trial, choose a monthly plan. Scale up or down anytime from your dashboard.",
   ],
   [
     "What if I need custom integrations?",
-    "Growth or Scale plans unlock priority support. We'll help you connect existing tools and automate even more."
-  ]
+    "Growth or Scale plans unlock priority support. We'll help you connect existing tools and automate even more.",
+  ],
 ];
 
 // Mouse glow
-function useMouseGlow(ref: React.RefObject<HTMLDivElement>) {
+function useMouseGlow(ref: React.RefObject<HTMLDivElement | null>) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -143,14 +205,19 @@ function useMouseGlow(ref: React.RefObject<HTMLDivElement>) {
       if (!el || !document.body.contains(el)) return;
       el.style.transform = `translate(${e.clientX - 60}px, ${e.clientY - 60}px)`;
     };
-    window.addEventListener('mousemove', handler as EventListener, { passive: true });
-    return () => window.removeEventListener('mousemove', handler as EventListener);
+    window.addEventListener(
+      "mousemove",
+      handler as EventListener,
+      { passive: true },
+    );
+    return () =>
+      window.removeEventListener("mousemove", handler as EventListener);
   }, [ref]);
 }
 
 // Typing animation for hero
 function useTypingAnimation(phrases: string[]) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -158,12 +225,18 @@ function useTypingAnimation(phrases: string[]) {
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (!deleting && charIdx < phrases[phraseIdx].length) {
-      timeout = setTimeout(() => setCharIdx((i) => i + 1), 42);
+      timeout = setTimeout(
+        () => setCharIdx((i) => i + 1),
+        42,
+      );
       setText(phrases[phraseIdx].slice(0, charIdx + 1));
     } else if (!deleting && charIdx === phrases[phraseIdx].length) {
       timeout = setTimeout(() => setDeleting(true), 1250);
     } else if (deleting && charIdx > 0) {
-      timeout = setTimeout(() => setCharIdx((i) => i - 1), 18);
+      timeout = setTimeout(
+        () => setCharIdx((i) => i - 1),
+        18,
+      );
       setText(phrases[phraseIdx].slice(0, charIdx - 1));
     } else if (deleting && charIdx === 0) {
       setDeleting(false);
@@ -217,38 +290,52 @@ function StatCounter({ to, duration }: { to: number; duration: number }) {
 
   return (
     <div ref={refed} className="stat-val">
-      {to === 100 ? `${val}%` : `$${val}${to === 49 ? '/mo' : ''}`}
+      {to === 100 ? `${val}%` : `$${val}${to === 49 ? "/mo" : ""}`}
     </div>
   );
 }
 
 // Slack demo card
-type SlackStatus = 'idle' | 'approved' | 'rejected';
+type SlackStatus = "idle" | "approved" | "rejected";
 function SlackDemoCard() {
-  const [status, setStatus] = useState<SlackStatus>('idle');
+  const [status, setStatus] = useState<SlackStatus>("idle");
   return (
     <div className="slack-card" aria-live="polite">
       <div className="slack-header">
         <span className="slack-dot" />
         <span>Approval Request</span>
-        <span className="slack-btn" aria-label="More">⋮</span>
+        <span className="slack-btn" aria-label="More">
+          ⋮
+        </span>
       </div>
       <div className="slack-msg">
         <span className="slack-user-ic">🧑‍💻</span>
         <div>
           <div className="slack-user-name">Mahad • 2m ago</div>
-          <div className="slack-req">{status === "idle" ? "Approve deployment of production?" : status === "approved" ? "Request approved 🎉" : "Request rejected 👎"}</div>
+          <div className="slack-req">
+            {status === "idle"
+              ? "Approve deployment of production?"
+              : status === "approved"
+                ? "Request approved 🎉"
+                : "Request rejected 👎"}
+          </div>
         </div>
       </div>
       {status === "idle" && (
         <div className="slack-actions">
-          <button className="btn-gold" onClick={() => setStatus('approved')}>Approve</button>
-          <button className="btn-ghost" onClick={() => setStatus('rejected')}>Reject</button>
+          <button className="btn-gold" onClick={() => setStatus("approved")}>
+            Approve
+          </button>
+          <button className="btn-ghost" onClick={() => setStatus("rejected")}>
+            Reject
+          </button>
         </div>
       )}
       {status !== "idle" && (
         <div className="slack-result">
-          <button className="btn-ghost" onClick={() => setStatus('idle')}>Reset</button>
+          <button className="btn-ghost" onClick={() => setStatus("idle")}>
+            Reset
+          </button>
         </div>
       )}
     </div>
@@ -268,25 +355,29 @@ export default function Page(): React.ReactNode {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   // Waitlist form
-  const [email, setEmail] = useState('');
-  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [formMsg, setFormMsg] = useState<string>('');
+  const [email, setEmail] = useState("");
+  const [formStatus, setFormStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [formMsg, setFormMsg] = useState<string>("");
 
   const handleScrollToCta = () => {
-    const el = document.getElementById('cta');
+    const el = document.getElementById("cta");
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
   // trap body scroll on nav open
   useEffect(() => {
     if (navOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [navOpen]);
 
   // nav click outside close
@@ -300,8 +391,9 @@ export default function Page(): React.ReactNode {
         setNavOpen(false);
       }
     };
-    window.addEventListener('mousedown', handler as EventListener);
-    return () => window.removeEventListener('mousedown', handler as EventListener);
+    window.addEventListener("mousedown", handler as EventListener);
+    return () =>
+      window.removeEventListener("mousedown", handler as EventListener);
   }, [navOpen]);
 
   // Typing animation
@@ -311,24 +403,24 @@ export default function Page(): React.ReactNode {
   const submitWaitlist = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || formStatus === "loading") return;
-    setFormStatus('loading');
+    setFormStatus("loading");
     try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
       if (res.ok) {
-        setFormStatus('success');
-        setFormMsg('You’re added! Watch your inbox 🎉');
-        setEmail('');
+        setFormStatus("success");
+        setFormMsg("You’re added! Watch your inbox 🎉");
+        setEmail("");
       } else {
-        setFormStatus('error');
-        setFormMsg('Oops! Try again or email hi@teamautomation.co');
+        setFormStatus("error");
+        setFormMsg("Oops! Try again or email hi@teamautomation.co");
       }
     } catch {
-      setFormStatus('error');
-      setFormMsg('Oops! Try again or email hi@teamautomation.co');
+      setFormStatus("error");
+      setFormMsg("Oops! Try again or email hi@teamautomation.co");
     }
   };
 
@@ -338,18 +430,68 @@ export default function Page(): React.ReactNode {
       <div ref={glowRef} className="bglow" />
       {/* NAV */}
       <nav className="nav">
-        <div className="nav-logo">Team<span style={{ color: "#D4AF37" }}>Automation</span></div>
+        <div className="nav-logo">
+          Team<span style={{ color: "#D4AF37" }}>Automation</span>
+        </div>
         <div className={`nav-center ${navOpen ? "nav-mobile-show" : ""}`}>
-          <a href="#stats" className="nav-link" tabIndex={navOpen ? 0 : -1}>Stats</a>
-          <a href="#how" className="nav-link" tabIndex={navOpen ? 0 : -1}>How it works</a>
-          <a href="#features" className="nav-link" tabIndex={navOpen ? 0 : -1}>Features</a>
-          <a href="#pricing" className="nav-link" tabIndex={navOpen ? 0 : -1}>Pricing</a>
-          <a href="#testimonials" className="nav-link" tabIndex={navOpen ? 0 : -1}>Testimonials</a>
-          <a href="#faq" className="nav-link" tabIndex={navOpen ? 0 : -1}>FAQ</a>
+          <a
+            href="#stats"
+            className="nav-link"
+            tabIndex={navOpen ? 0 : -1}
+          >
+            Stats
+          </a>
+          <a
+            href="#how"
+            className="nav-link"
+            tabIndex={navOpen ? 0 : -1}
+          >
+            How it works
+          </a>
+          <a
+            href="#features"
+            className="nav-link"
+            tabIndex={navOpen ? 0 : -1}
+          >
+            Features
+          </a>
+          <a
+            href="#pricing"
+            className="nav-link"
+            tabIndex={navOpen ? 0 : -1}
+          >
+            Pricing
+          </a>
+          <a
+            href="#testimonials"
+            className="nav-link"
+            tabIndex={navOpen ? 0 : -1}
+          >
+            Testimonials
+          </a>
+          <a
+            href="#faq"
+            className="nav-link"
+            tabIndex={navOpen ? 0 : -1}
+          >
+            FAQ
+          </a>
         </div>
         <div className="nav-end">
-          <button className="btn-ghost nav-cta" style={{ display: 'none' }} onClick={handleScrollToCta}>Login</button>
-          <button className="btn-gold nav-cta" style={{ display: 'none' }} onClick={handleScrollToCta}>Join waitlist</button>
+          <button
+            className="btn-ghost nav-cta"
+            style={{ display: "none" }}
+            onClick={handleScrollToCta}
+          >
+            Login
+          </button>
+          <button
+            className="btn-gold nav-cta"
+            style={{ display: "none" }}
+            onClick={handleScrollToCta}
+          >
+            Join waitlist
+          </button>
           <button
             ref={navBtnRef}
             className={`nav-ham${navOpen ? " nav-ham-open" : ""}`}
@@ -365,8 +507,12 @@ export default function Page(): React.ReactNode {
         </div>
         {/* Desktop nav CTAs */}
         <div className="nav-right-desktop">
-          <button className="btn-ghost" onClick={handleScrollToCta}>Login</button>
-          <button className="btn-gold" onClick={handleScrollToCta}>Join waitlist</button>
+          <button className="btn-ghost" onClick={handleScrollToCta}>
+            Login
+          </button>
+          <button className="btn-gold" onClick={handleScrollToCta}>
+            Join waitlist
+          </button>
         </div>
       </nav>
       {/* HERO */}
@@ -375,14 +521,22 @@ export default function Page(): React.ReactNode {
           <div className="hero-copy">
             <div className="eyebrow">FOR PRODUCT & DEV TEAMS</div>
             <h1>
-              <span className="shimmer">Slack-native</span> approvals that <span className="gold-txt">just happen</span>
+              <span className="shimmer">Slack-native</span> approvals that{" "}
+              <span className="gold-txt">just happen</span>
             </h1>
             <div className="hero-typed">
-              <span className="typed-anim">{typedPhrase}<span className="blink">|</span></span>
+              <span className="typed-anim">
+                {typedPhrase}
+                <span className="blink">|</span>
+              </span>
             </div>
             <div className="hero-actions">
-              <button className="btn-gold" onClick={handleScrollToCta}>Join the waitlist</button>
-              <button className="btn-ghost" onClick={handleScrollToCta}>See how it works</button>
+              <button className="btn-gold" onClick={handleScrollToCta}>
+                Join the waitlist
+              </button>
+              <button className="btn-ghost" onClick={handleScrollToCta}>
+                See how it works
+              </button>
             </div>
           </div>
           <div className="hero-card-wrap">
@@ -439,13 +593,23 @@ export default function Page(): React.ReactNode {
           <div className="h2">Pricing</div>
           <div className="pricing-row">
             {PRICING.map((plan, i) => (
-              <div className={`card pricing-card${i === 1 ? " featured" : ""}`} key={plan.label}>
+              <div
+                className={`card pricing-card${i === 1 ? " featured" : ""}`}
+                key={plan.label}
+              >
                 <div className="pricing-label">{plan.label}</div>
-                <div className="pricing-price">${plan.price}<span className="mo">/mo</span></div>
+                <div className="pricing-price">
+                  ${plan.price}
+                  <span className="mo">/mo</span>
+                </div>
                 <ul className="pricing-list">
-                  {plan.features.map((f) => (<li key={f}>{f}</li>))}
+                  {plan.features.map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
                 </ul>
-                <button className={`btn-${i === 1 ? 'gold' : 'ghost'}`}>{plan.cta}</button>
+                <button className={`btn-${i === 1 ? "gold" : "ghost"}`}>
+                  {plan.cta}
+                </button>
               </div>
             ))}
           </div>
@@ -456,11 +620,17 @@ export default function Page(): React.ReactNode {
         <div className="section-inner">
           <div className="h2">Loved by teams</div>
           <div className="testi-row">
-            {TESTIMONIALS.map((t, i) => (
+            {TESTIMONIALS.map((t) => (
               <div className="card testi-card" key={t.name}>
                 <div className="testi-quote">“{t.quote}”</div>
                 <div className="testi-user">
-                  <img src={t.img} alt={t.name} className="testi-img" width={40} height={40} />
+                  <img
+                    src={t.img}
+                    alt={t.name}
+                    className="testi-img"
+                    width={40}
+                    height={40}
+                  />
                   <div>
                     <div className="testi-name">{t.name}</div>
                     <div className="testi-company">{t.company}</div>
@@ -492,7 +662,11 @@ export default function Page(): React.ReactNode {
       <section className="section cta" id="cta">
         <div className="section-inner cta-inner">
           <div className="h2">Join the waitlist</div>
-          <form className="cta-form" onSubmit={submitWaitlist} autoComplete="off">
+          <form
+            className="cta-form"
+            onSubmit={submitWaitlist}
+            autoComplete="off"
+          >
             <input
               required
               type="email"
@@ -502,26 +676,38 @@ export default function Page(): React.ReactNode {
               aria-label="Your work email"
               value={email}
               disabled={formStatus === "loading" || formStatus === "success"}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
             />
-            <button type="submit" className="btn-gold" disabled={formStatus === "loading" || formStatus === "success"}>
+            <button
+              type="submit"
+              className="btn-gold"
+              disabled={formStatus === "loading" || formStatus === "success"}
+            >
               {formStatus === "loading" ? "Submitting..." : "Join Waitlist"}
             </button>
           </form>
-          {formMsg && <div className={`cta-msg cta-${formStatus}`}>{formMsg}</div>}
+          {formMsg && (
+            <div className={`cta-msg cta-${formStatus}`}>{formMsg}</div>
+          )}
         </div>
       </section>
       {/* FOOTER */}
       <footer className="footer">
         <div className="footer-inner">
-          <div className="footer-logo">Team<span style={{ color: "#D4AF37" }}>Automation</span></div>
+          <div className="footer-logo">
+            Team<span style={{ color: "#D4AF37" }}>Automation</span>
+          </div>
           <div className="footer-links">
             <a href="#features">Features</a>
             <a href="#pricing">Pricing</a>
             <a href="#faq">FAQ</a>
             <a href="mailto:hi@teamautomation.co">Contact</a>
           </div>
-          <div className="footer-copy">© {new Date().getFullYear()} TeamAutomation. All rights reserved.</div>
+          <div className="footer-copy">
+            © {new Date().getFullYear()} TeamAutomation. All rights reserved.
+          </div>
         </div>
       </footer>
 
