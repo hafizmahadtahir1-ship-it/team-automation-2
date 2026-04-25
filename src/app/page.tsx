@@ -30,7 +30,8 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer, isOpen, onToggle })
 
 interface Stat {
   label: string;
-  value: string;
+  suffix?: string;
+  prefix?: string;
   countTo: number;
   duration: number;
 }
@@ -44,8 +45,7 @@ interface Feature {
 interface Testimonial {
   quote: string;
   name: string;
-  company: string;
-  img: string;
+  role: string;
 }
 
 const TYPING_PHRASES = [
@@ -55,11 +55,12 @@ const TYPING_PHRASES = [
   "Built for real teams.",
 ];
 
+// UPDATED STATS ARRAY
 const STATS: Stat[] = [
-  { label: "5min setup", value: "0", countTo: 5, duration: 1100 },
-  { label: "14-day trial", value: "0", countTo: 14, duration: 1200 },
-  { label: "100% Slack-native", value: "0", countTo: 100, duration: 1200 },
-  { label: "$49/mo", value: "0", countTo: 49, duration: 1300 },
+  { label: "Setup Time", countTo: 5, duration: 1100, suffix: " min" },
+  { label: "Free Trial", countTo: 14, duration: 1200, suffix: "-day" },
+  { label: "Slack-Native", countTo: 100, duration: 1200, suffix: "%" },
+  { label: "Starting Price", countTo: 49, duration: 1300, prefix: "$", suffix: "/mo" },
 ];
 
 const HOW_STEPS: [string, string, string][] = [
@@ -80,119 +81,130 @@ const HOW_STEPS: [string, string, string][] = [
   ],
 ];
 
+// UPDATED FEATURES ARRAY
 const FEATURES: Feature[] = [
   {
     icon: <span className="ibox">⚡</span>,
-    label: "Blazingly Fast",
-    desc: "5-min setup and instant Slack integration.",
+    label: "Instant Slack Cards",
+    desc: "Approval requests appear as rich interactive Slack messages. One click to approve or reject.",
   },
   {
-    icon: <span className="ibox">🔐</span>,
-    label: "Granular Permissions",
-    desc: "Role-based approvals and audit tracking.",
+    icon: <span className="ibox">🔔</span>,
+    label: "Smart Nudges",
+    desc: "Auto reminders on Day 1, 3, and 7 if a request is pending. Zero forgotten approvals.",
   },
   {
-    icon: <span className="ibox">🧩</span>,
-    label: "No-Code Builder",
-    desc: "Design workflows with drag-and-drop templates.",
+    icon: <span className="ibox">📋</span>,
+    label: "Full Audit Trail",
+    desc: "Every action logged with timestamp and user. Always compliant, exportable to CSV.",
   },
   {
-    icon: <span className="ibox">🛡️</span>,
-    label: "Security-First",
-    desc: "SOC2-ready, secure OAuth, full data isolation.",
+    icon: <span className="ibox">🔀</span>,
+    label: "Delegate Approvals",
+    desc: "Use /approve-delegate to hand off authority instantly when out of office.",
   },
   {
-    icon: <span className="ibox">📈</span>,
-    label: "Realtime Insights",
-    desc: "See history, users, & KPIs live. Export anytime.",
+    icon: <span className="ibox">📊</span>,
+    label: "Dashboard & Export",
+    desc: "See all requests in one view. Filter, search, and export CSV in real time.",
   },
   {
-    icon: <span className="ibox">🤝</span>,
-    label: "Human + API",
-    desc: "Human approvals, API triggers, full Slackbot.",
+    icon: <span className="ibox">🔒</span>,
+    label: "Secure by Default",
+    desc: "Slack signature verification, Supabase RLS, full isolation. Enterprise-grade from day one.",
   },
 ];
 
+// UPDATED PRICING ARRAY
 const PRICING = [
   {
     label: "Starter",
     price: 49,
     features: [
-      "Unlimited workflows",
-      "Slack native",
-      "Email reports",
-      "SOC2-ready",
+      "Up to 10 members",
+      "Unlimited requests",
+      "Smart nudges",
+      "30-day audit trail",
+      "Dashboard + CSV",
+      "Email support",
     ],
-    cta: "Start trial",
+    cta: "Start free trial",
+    featured: false,
   },
   {
     label: "Growth",
     price: 149,
     features: [
-      "Everything in Starter",
-      "Custom roles",
+      "Up to 50 members",
+      "Unlimited requests",
+      "Multi-level chains",
+      "1-year audit trail",
+      "Analytics",
       "Priority support",
-      "Zapier integration",
     ],
-    cta: "Upgrade (Popular)",
+    cta: "Start free trial",
+    featured: true,
   },
   {
     label: "Scale",
     price: 499,
     features: [
-      "All Growth features",
-      "Dedicated CSM",
-      "Audit exports",
-      "On-prem options",
+      "Unlimited members",
+      "Custom workflows",
+      "SSO & security",
+      "Unlimited audit trail",
+      "Dedicated manager",
+      "SLA guarantee",
     ],
-    cta: "Contact Sales",
+    cta: "Contact us",
+    featured: false,
   },
 ];
 
+// UPDATED TESTIMONIALS
 const TESTIMONIALS: Testimonial[] = [
   {
-    quote:
-      "Approvals in Slack = more shipping, less waiting. Our team automated 80% of our process in a day.",
-    name: "Ava L.",
-    company: "Ops Lead, Growthly",
-    img: "https://randomuser.me/api/portraits/women/68.jpg",
+    quote: "We used to lose track of purchase approvals constantly. TeamAutomation fixed that in one afternoon.",
+    name: "Sarah K.",
+    role: "Ops Manager, Series A startup",
   },
   {
-    quote:
-      "Auditors loved the full Slack audit trail. Legal loves it, my engineers love it, I love it.",
-    name: "Miguel R.",
-    company: "CTO, ReFinance",
-    img: "https://randomuser.me/api/portraits/men/32.jpg",
+    quote: "The audit trail alone is worth it. Finance stopped asking for screenshots of every approval.",
+    name: "Marcus T.",
+    role: "Team Lead, 40-person agency",
   },
   {
-    quote:
-      "From click to production in 10 minutes. The experience is absurdly slick and easy.",
-    name: "Priya S.",
-    company: "Product, Fintic",
-    img: "https://randomuser.me/api/portraits/women/91.jpg",
+    quote: "Setup was genuinely 5 minutes. Our whole approval process now lives in Slack.",
+    name: "Priya N.",
+    role: "Head of Ops, SaaS company",
   },
 ];
 
+// UPDATED FAQ
 const FAQ: [string, string][] = [
   [
-    "Is it really Slack-only?",
-    "Yes, TeamAutomation is built from the ground up for Slack. All approvals, notifications, and workflows live right in your workspace.",
+    "Do I need to know how to code?",
+    "Not at all. Installs like any Slack app — click, authorize, done.",
   ],
   [
-    "Is my data secure?",
-    "Absolutely. We're SOC2-ready, use strict isolation, and never access your messages unless for approvals you explicitly configure.",
+    "Does my team need to download anything?",
+    "No. Everything happens inside Slack.",
   ],
   [
-    "Can I build custom workflows?",
-    "Yes—use no-code templates or code for advanced logic. API/webhook triggers supported. Reach out for open API docs.",
+    "What's included in the free trial?",
+    "Full access for 14 days. No credit card. Cancel anytime.",
   ],
   [
-    "How does billing work?",
-    "Simple! After your 14-day free trial, choose a monthly plan. Scale up or down anytime from your dashboard.",
+    "How does the audit trail work?",
+    "Every action logged with timestamp and user. Exportable as CSV.",
   ],
   [
-    "What if I need custom integrations?",
-    "Growth or Scale plans unlock priority support. We'll help you connect existing tools and automate even more.",
+    "Can I delegate when out of office?",
+    "Yes. /approve-delegate assigns a temporary approver instantly.",
+  ],
+  [
+    "What happens when my trial ends?",
+    "App pauses on day 12 reminder. No data lost. Resume anytime.",
   ],
 ];
 
@@ -263,7 +275,8 @@ function useReveal(ref: React.RefObject<HTMLDivElement | null>, cb: () => void) 
   }, [ref, cb]);
 }
 
-function StatCounter({ to, duration }: { to: number; duration: number }) {
+// StatCounter with new stat format (prefix/suffix/label)
+function StatCounter({ to, duration, prefix, suffix }: { to: number; duration: number; prefix?: string; suffix?: string }) {
   const [val, setVal] = useState(0);
   const refed = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
@@ -290,7 +303,7 @@ function StatCounter({ to, duration }: { to: number; duration: number }) {
 
   return (
     <div ref={refed} className="stat-val">
-      {to === 100 ? `${val}%` : `$${val}${to === 49 ? "/mo" : ""}`}
+      {`${prefix ?? ""}${val}${suffix ?? ""}`}
     </div>
   );
 }
@@ -435,11 +448,11 @@ export default function Page(): React.ReactNode {
         </div>
         <div className={`nav-center ${navOpen ? "nav-mobile-show" : ""}`}>
           <a
-            href="#stats"
+            href="#features"
             className="nav-link"
             tabIndex={navOpen ? 0 : -1}
           >
-            Stats
+            Features
           </a>
           <a
             href="#how"
@@ -449,25 +462,11 @@ export default function Page(): React.ReactNode {
             How it works
           </a>
           <a
-            href="#features"
-            className="nav-link"
-            tabIndex={navOpen ? 0 : -1}
-          >
-            Features
-          </a>
-          <a
             href="#pricing"
             className="nav-link"
             tabIndex={navOpen ? 0 : -1}
           >
             Pricing
-          </a>
-          <a
-            href="#testimonials"
-            className="nav-link"
-            tabIndex={navOpen ? 0 : -1}
-          >
-            Testimonials
           </a>
           <a
             href="#faq"
@@ -490,7 +489,7 @@ export default function Page(): React.ReactNode {
             style={{ display: "none" }}
             onClick={handleScrollToCta}
           >
-            Join waitlist
+            Get Early Access
           </button>
           <button
             ref={navBtnRef}
@@ -511,7 +510,7 @@ export default function Page(): React.ReactNode {
             Login
           </button>
           <button className="btn-gold" onClick={handleScrollToCta}>
-            Join waitlist
+            Get Early Access
           </button>
         </div>
       </nav>
@@ -532,7 +531,7 @@ export default function Page(): React.ReactNode {
             </div>
             <div className="hero-actions">
               <button className="btn-gold" onClick={handleScrollToCta}>
-                Join the waitlist
+                Get Early Access
               </button>
               <button className="btn-ghost" onClick={handleScrollToCta}>
                 See how it works
@@ -551,7 +550,12 @@ export default function Page(): React.ReactNode {
         <div className="section-inner stat-row">
           {STATS.map((stat, i) => (
             <div key={stat.label} className="stat-box">
-              <StatCounter to={stat.countTo} duration={stat.duration} />
+              <StatCounter
+                to={stat.countTo}
+                duration={stat.duration}
+                prefix={stat.prefix}
+                suffix={stat.suffix}
+              />
               <div className="stat-label">{stat.label}</div>
             </div>
           ))}
@@ -594,8 +598,19 @@ export default function Page(): React.ReactNode {
           <div className="pricing-row">
             {PRICING.map((plan, i) => (
               <div
-                className={`card pricing-card${i === 1 ? " featured" : ""}`}
+                className={`card pricing-card${plan.featured ? " featured" : ""}`}
                 key={plan.label}
+                style={
+                  plan.featured
+                    ? {
+                        border: '2px solid #D4AF37',
+                        background: 'linear-gradient(145deg, rgba(22,16,6,0.98), rgba(12,8,2,0.99))',
+                        transform: 'scale(1.047)',
+                        boxShadow: '0 6px 44px -7px #8B6914',
+                        zIndex: 2,
+                      }
+                    : undefined
+                }
               >
                 <div className="pricing-label">{plan.label}</div>
                 <div className="pricing-price">
@@ -607,7 +622,7 @@ export default function Page(): React.ReactNode {
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
-                <button className={`btn-${i === 1 ? "gold" : "ghost"}`}>
+                <button className={`btn-${plan.featured ? "gold" : "ghost"}`}>
                   {plan.cta}
                 </button>
               </div>
@@ -624,16 +639,27 @@ export default function Page(): React.ReactNode {
               <div className="card testi-card" key={t.name}>
                 <div className="testi-quote">“{t.quote}”</div>
                 <div className="testi-user">
-                  <img
-                    src={t.img}
-                    alt={t.name}
-                    className="testi-img"
-                    width={40}
-                    height={40}
-                  />
+                  <div
+                    style={{
+                      borderRadius: "50%",
+                      width: 40,
+                      height: 40,
+                      background: "#D4AF37",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.7rem",
+                      marginRight: 2,
+                      color: "#12111a",
+                      fontWeight: 700,
+                    }}
+                    aria-hidden="true"
+                  >
+                    👤
+                  </div>
                   <div>
                     <div className="testi-name">{t.name}</div>
-                    <div className="testi-company">{t.company}</div>
+                    <div className="testi-company">{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -1126,11 +1152,7 @@ export default function Page(): React.ReactNode {
         margin-bottom: 11px;
       }
       .pricing-card.featured {
-        border: 2px solid var(--gold);
-        background: linear-gradient(122deg,#232235,#191924 66%,#20137c22);
-        transform: scale(1.047);
-        box-shadow: 0 6px 44px -7px var(--gold-dark);
-        z-index: 2;
+        /* styles are overridden inline for correct gold background */
       }
       .pricing-label {
         font-family: var(--syne);
