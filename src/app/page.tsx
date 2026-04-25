@@ -176,7 +176,7 @@ function useTypingAnimation(phrases: string[]) {
 }
 
 // Intersection observer for counter animations and scroll reveals
-function useReveal(ref: React.RefObject<HTMLDivElement>, cb: () => void) {
+function useReveal(ref: React.RefObject<HTMLDivElement | null>, cb: () => void) {
   useEffect(() => {
     if (!ref.current) return;
     const observer = new window.IntersectionObserver(
