@@ -9,43 +9,36 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [mode, setMode] = useState<"login" | "forgot">("login");
   const router = useRouter();
   const supabase = createClient();
 
   const handleLogin = async () => {
     setLoading(true);
     setError("");
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-      return;
-    }
-
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) { setError(error.message); setLoading(false); return; }
     router.push("/dashboard");
   };
 
   const handleSignup = async () => {
     setLoading(true);
     setError("");
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-      return;
-    }
-
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) { setError(error.message); setLoading(false); return; }
     setError("Check your email to confirm your account!");
+    setLoading(false);
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) { setError("Enter your email first"); return; }
+    setLoading(true);
+    setError("");
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) { setError(error.message); }
+    else { setError("✅ Reset link sent — check your email!"); }
     setLoading(false);
   };
 
@@ -59,7 +52,9 @@ export default function LoginPage() {
               Team<span className="text-emerald-400">Automation</span>
             </span>
           </div>
-          <p className="text-white/40 text-sm">Sign in to your dashboard</p>
+          <p className="text-white/40 text-sm">
+            {mode === "login" ? "Sign in to your dashboard" : "Reset your password"}
+          </p>
         </div>
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-4">
@@ -74,17 +69,28 @@ export default function LoginPage() {
             />
           </div>
 
-          <div>
-            <label className="text-xs text-white/40 mb-1 block">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-emerald-500/50 transition-colors"
-            />
-          </div>
+          {mode === "login" && (
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <label className="text-xs text-white/40">Password</label>
+                <button
+                  type="button"
+                  onClick={() => { setMode("forgot"); setError(""); }}
+                  className="text-xs text-white/30 hover:text-emerald-400 transition-colors"
+                >
+                  Forgot password?
+                </button>
+              </div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-emerald-500/50 transition-colors"
+              />
+            </div>
+          )}
 
           {error && (
             <p className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
@@ -92,21 +98,40 @@ export default function LoginPage() {
             </p>
           )}
 
-          <button
-            onClick={handleLogin}
-            disabled={loading}
-            className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm py-3 rounded-lg transition-all disabled:opacity-50"
-          >
-            {loading ? "Signing in..." : "Sign In"}
-          </button>
-
-          <button
-            onClick={handleSignup}
-            disabled={loading}
-            className="w-full bg-white/5 hover:bg-white/10 text-white/60 text-sm py-3 rounded-lg transition-all border border-white/10"
-          >
-            Create Account
-          </button>
+          {mode === "login" ? (
+            <>
+              <button
+                onClick={handleLogin}
+                disabled={loading}
+                className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm py-3 rounded-lg transition-all disabled:opacity-50"
+              >
+                {loading ? "Signing in..." : "Sign In"}
+              </button>
+              <button
+                onClick={handleSignup}
+                disabled={loading}
+                className="w-full bg-white/5 hover:bg-white/10 text-white/60 text-sm py-3 rounded-lg transition-all border border-white/10"
+              >
+                Create Account
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={handleForgotPassword}
+                disabled={loading}
+                className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm py-3 rounded-lg transition-all disabled:opacity-50"
+              >
+                {loading ? "Sending..." : "Send Reset Link"}
+              </button>
+              <button
+                onClick={() => { setMode("login"); setError(""); }}
+                className="w-full bg-white/5 hover:bg-white/10 text-white/60 text-sm py-3 rounded-lg transition-all border border-white/10"
+              >
+                ← Back to Sign In
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
