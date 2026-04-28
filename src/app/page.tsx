@@ -359,7 +359,7 @@ export default function LandingPage() {
         </div>
         {/* Desktop CTAs */}
         <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <button className="btn-ghost" onClick={() => go("cta")} style={{ padding: "8px 18px", borderRadius: "100px", fontSize: "13px" }}>Sign in</button>
+          <button className="btn-ghost" onClick={() => window.location.href="/login"} style={{ padding: "8px 18px", borderRadius: "100px", fontSize: "13px" }}>Sign in</button>
           <button className="btn-gold" onClick={() => go("cta")} style={{ padding: "8px 18px", borderRadius: "100px", fontSize: "13px", boxShadow: "0 4px 16px rgba(212,175,55,0.3)" }}>Get Early Access</button>
         </div>
         {/* Mobile hamburger */}
