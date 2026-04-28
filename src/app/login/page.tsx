@@ -35,7 +35,7 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: `https://teamautomation.app/reset-password`,
     });
     if (error) { setError(error.message); }
     else { setError("✅ Reset link sent — check your email!"); }
