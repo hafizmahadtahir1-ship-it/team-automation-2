@@ -34,10 +34,31 @@ export default async function DashboardPage() {
   if (!user) {
     redirect("/login");
   }
+// Check if this user has a team linked
+  let { data: team } = await supabase
+    .from("teams")
+    .select("id")
+    .eq("auth_user_id", user.id)
+    .single();
 
+  // Agar team nahi hai, to naya empty team bana do
+  if (!team) {
+    const { data: newTeam } = await supabase
+      .from("teams")
+      .insert({ 
+        auth_user_id: user.id, 
+        plan: "trial",
+        slack_workspace_id: `pending_${user.id}`,
+        bot_token: "pending"
+      })
+      .select("id")
+      .single();
+    team = newTeam;
+  }
   const { data: requests } = await supabase
     .from("requests")
     .select("*")
+.eq("team_id", team?.id)
     .order("created_at", { ascending: false })
     .limit(50);
 
