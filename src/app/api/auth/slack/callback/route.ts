@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
+  const userId = req.nextUrl.searchParams.get("state");
 
   if (!code) {
     return NextResponse.redirect("https://team-automation.vercel.app?error=no_code");
@@ -32,6 +33,7 @@ export async function GET(req: NextRequest) {
     slack_access_token: data.access_token,
     plan: "free",
     subscription_status: "trialing",
+    ...(userId ? { auth_user_id: userId } : {}),
   }, {
     onConflict: "slack_workspace_id",
   });

@@ -62,5 +62,5 @@ export default async function DashboardPage() {
     .order("created_at", { ascending: false })
     .limit(50);
 
-  return <DashboardClient requests={requests || []} />;
+  return <DashboardClient requests={requests || []} userId={user!.id} />;
 }
