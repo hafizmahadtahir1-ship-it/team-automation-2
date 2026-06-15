@@ -476,9 +476,9 @@ export default function LandingPage() {
       <section id="pricing" className="section">
         <div className="inner">
           <SR>
-            <div className="eyebrow">Pricing</div>
-            <h2 className="h2">Simple, <em>transparent pricing</em></h2>
-            <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "16px", marginBottom: "44px", marginTop: "-28px" }}>14-day free trial on all plans. No credit card required.</p>
+            <div className="eyebrow">Beta Program</div>
+<h2 className="h2">Join free, <em>shape the product</em></h2>
+<p style={{ color: "rgba(255,255,255,0.35)", fontSize: "16px", marginBottom: "44px", marginTop: "-28px" }}>Free access during beta. No credit card required.</p>
           </SR>
           <div className="pricing-wrap" style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center" }}>
             {PRICING.map((p, i) => (
