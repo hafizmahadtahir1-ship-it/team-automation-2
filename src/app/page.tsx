@@ -239,10 +239,8 @@ export default function LandingPage() {
     },
   ];
 
-  const TESTIMONIALS = [
-    { q: "We used to lose track of purchase approvals constantly. TeamAutomation fixed that in one afternoon.", name: "Sarah K.", role: "Ops Manager, Series A startup" },
-    { q: "The audit trail alone is worth it. Finance stopped asking for screenshots of every approval.", name: "Marcus T.", role: "Team Lead, 40-person agency" },
-    { q: "Setup was genuinely 5 minutes. Our whole approval process now lives in Slack.", name: "Priya N.", role: "Head of Ops, SaaS company" },
+ const TESTIMONIALS = [
+    { q: "Be one of our first beta users. Get free access, direct founder support, and shape the product from day one.", name: "Beta Access", role: "Free · No credit card · Cancel anytime" },
   ];
 
   const FAQS: [string, string][] = [
