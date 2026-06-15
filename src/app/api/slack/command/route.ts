@@ -47,12 +47,21 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  // Team fetch karo
+  const team_id_raw = body.get("team_id") as string;
+  const { data: team } = await supabase
+    .from("teams")
+    .select("id")
+    .eq("slack_workspace_id", team_id_raw)
+    .single();
+
   // Request save karo
   await supabase.from("requests").insert({
     template_type: "purchase",
     title: text,
     status: "pending",
     slack_channel_id: channel_id,
+    team_id: team?.id || null,
   });
 
   return NextResponse.json({
