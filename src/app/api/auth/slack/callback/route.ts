@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("state");
 
   if (!code) {
-    return NextResponse.redirect("https://team-automation.vercel.app?error=no_code");
+    return NextResponse.redirect("https://teamautomation.app?error=no_code");
   }
 
   const response = await fetch("https://slack.com/api/oauth.v2.access", {
@@ -16,14 +16,14 @@ export async function GET(req: NextRequest) {
       client_id: process.env.SLACK_CLIENT_ID!,
       client_secret: process.env.SLACK_CLIENT_SECRET!,
       code,
-      redirect_uri: "https://team-automation.vercel.app/api/auth/slack/callback",
+      redirect_uri: "https://teamautomation.app/api/auth/slack/callback",
     }),
   });
 
   const data = await response.json();
 
   if (!data.ok) {
-    return NextResponse.redirect("https://team-automation.vercel.app?error=oauth_failed");
+    return NextResponse.redirect("https://teamautomation.app?error=oauth_failed");
   }
 
   // Save team to DB
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
             {
               type: "button",
               text: { type: "plain_text", text: "View Dashboard" },
-              url: "https://team-automation.vercel.app/dashboard",
+              url: "https://teamautomation.app/dashboard",
               style: "primary",
               action_id: "view_dashboard",
             },
@@ -71,5 +71,5 @@ export async function GET(req: NextRequest) {
     }),
   });
 
-  return NextResponse.redirect("https://team-automation.vercel.app/dashboard?installed=true");
+  return NextResponse.redirect("https://teamautomation.app/dashboard?installed=true");
 }
