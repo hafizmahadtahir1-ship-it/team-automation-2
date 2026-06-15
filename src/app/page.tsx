@@ -425,12 +425,12 @@ export default function LandingPage() {
       <section style={{ padding: "0 clamp(16px,4vw,32px) 72px", position: "relative", zIndex: 2 }}>
         <SR>
           <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-            <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1px", background: "rgba(212,175,55,0.07)", borderRadius: "20px", overflow: "hidden", border: "1px solid rgba(212,175,55,0.1)" }}>
+            <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "1px", background: "rgba(212,175,55,0.07)", borderRadius: "20px", overflow: "hidden", border: "1px solid rgba(212,175,55,0.1)" }}>
               {[
                 { to: 5, suffix: " min", label: "Setup Time" },
                 { to: 14, suffix: "-day", label: "Free Trial" },
                 { to: 100, suffix: "%", label: "Slack-Native" },
-                { to: 49, prefix: "$", suffix: "/mo", label: "Starting Price" },
+                { to: 0, prefix: "$", suffix: "", label: "Beta Access" },
               ].map((s, i) => (
                 <div key={i} style={{ padding: "32px 16px", background: "rgba(4,4,10,0.92)" }}>
                   <Counter {...s} />
