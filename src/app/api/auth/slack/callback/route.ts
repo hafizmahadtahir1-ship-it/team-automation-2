@@ -27,16 +27,23 @@ export async function GET(req: NextRequest) {
   }
 
   // Save team to DB
-  await supabase.from("teams").upsert({
-    slack_workspace_id: data.team.id,
-    bot_token: data.access_token,
-    slack_access_token: data.access_token,
-    plan: "free",
-    subscription_status: "trialing",
-    ...(userId ? { auth_user_id: userId } : {}),
-  }, {
-    onConflict: "slack_workspace_id",
-  });
+  if (userId) {
+    await supabase.from("teams").update({
+      slack_workspace_id: data.team.id,
+      bot_token: data.access_token,
+      slack_access_token: data.access_token,
+      plan: "free",
+      subscription_status: "trialing",
+    }).eq("auth_user_id", userId).eq("bot_token", "pending");
+  } else {
+    await supabase.from("teams").upsert({
+      slack_workspace_id: data.team.id,
+      bot_token: data.access_token,
+      slack_access_token: data.access_token,
+      plan: "free",
+      subscription_status: "trialing",
+    }, { onConflict: "slack_workspace_id" });
+  }
 
   // Welcome message bhejo
   await fetch("https://slack.com/api/chat.postMessage", {
