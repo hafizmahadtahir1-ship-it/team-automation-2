@@ -512,11 +512,7 @@ export default function LandingPage() {
               </SR>
             ))}
           </div>
-          <SR delay={150}>
-            <div style={{ marginTop: "22px", textAlign: "center", background: "rgba(212,175,55,0.04)", border: "1px solid rgba(212,175,55,0.13)", borderRadius: "12px", padding: "14px 20px", maxWidth: "440px", margin: "22px auto 0", animation: "bglow 5s ease infinite" }}>
-              <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "13px" }}>Save 32% — <span style={{ color: "#D4AF37", fontWeight: 600 }}>$399/year</span><span style={{ color: "rgba(255,255,255,0.25)" }}> · Contact us</span></span>
-            </div>
-          </SR>
+          
         </div>
       </section>
 
