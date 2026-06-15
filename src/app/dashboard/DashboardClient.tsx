@@ -67,7 +67,7 @@ export default function DashboardClient({ requests, userId }: { requests: Reques
         </div>
         <div className="flex items-center gap-3">
           <a
-            href={`https://slack.com/oauth/v2/authorize?client_id=9731924865781.10770998800916&scope=chat:write,commands,users:read&user_scope=&redirect_uri=https://teamautomation.app/api/auth/slack/callback&state=${userId}`}
+            href={`https://slack.com/oauth/v2/authorize?client_id=9731924865781.10770998800916&scope=chat:write,commands,users:read&user_scope=&state=${userId}`}
             className="flex items-center gap-2 bg-[#007a5a] hover:bg-[#005c44] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all"
           >
             🔌 Connect Slack
