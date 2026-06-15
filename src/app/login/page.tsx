@@ -24,8 +24,8 @@ export default function LoginPage() {
     setLoading(true); setError("");
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) { setError(error.message); setLoading(false); return; }
-    setError("✅ Check your email to confirm your account!");
-    setLoading(false);
+    await supabase.auth.signInWithPassword({ email, password });
+    window.location.href = "/dashboard";
   };
 
   const handleForgotPassword = async () => {
