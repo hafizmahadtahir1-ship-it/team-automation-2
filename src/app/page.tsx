@@ -532,12 +532,12 @@ export default function LandingPage() {
       {/* ══ TESTIMONIALS ══ */}
       <section className="section">
         <div className="inner">
-          <SR><div className="eyebrow">Early Feedback</div><h2 className="h2">Teams already <em>love it</em></h2></SR>
+          <SR><div className="eyebrow">Beta Program</div><h2 className="h2">Join our <em>first beta</em></h2></SR>
           <div className="grid3">
             {TESTIMONIALS.map((t, i) => (
               <SR key={i} delay={i * 70}>
                 <div className="card" style={{ padding: "24px 20px", height: "100%" }}>
-                  <div style={{ color: "#D4AF37", letterSpacing: "2px", marginBottom: "12px", fontSize: "12px" }}>★★★★★</div>
+                  
                   <p style={{ color: "rgba(255,255,255,0.66)", fontSize: "14px", lineHeight: 1.78, marginBottom: "16px", fontStyle: "italic" }}>&ldquo;{t.q}&rdquo;</p>
                   <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                     <div style={{ width: "34px", height: "34px", borderRadius: "50%", background: "rgba(212,175,55,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px", flexShrink: 0 }}>👤</div>
@@ -556,7 +556,7 @@ export default function LandingPage() {
       {/* ══ FAQ ══ */}
       <section id="faq" className="section">
         <div style={{ maxWidth: "660px", margin: "0 auto" }}>
-          <SR><div className="eyebrow" style={{ textAlign: "center" }}>FAQ</div><h2 className="h2" style={{ textAlign: "center" }}>Questions <em>answered</em></h2></SR>
+          <SR><div className="eyebrow" style={{ textAlign: "center", fontSize: "16px", letterSpacing: "4px" }}>FAQ</div><h2 className="h2" style={{ textAlign: "center" }}>Questions <em>answered</em></h2></SR>
           {FAQS.map(([q, a], i) => <FaqItem key={i} q={q} a={a} />)}
         </div>
       </section>
@@ -605,7 +605,7 @@ export default function LandingPage() {
             >{l}</a>
           ))}
         </div>
-        <div style={{ color: "rgba(255,255,255,0.13)", fontSize: "11px" }}>© 2025 TeamAutomation</div>
+        <div style={{ color: "rgba(255,255,255,0.13)", fontSize: "11px" }}>© 2026 TeamAutomation</div>
       </footer>
 
     </div>
