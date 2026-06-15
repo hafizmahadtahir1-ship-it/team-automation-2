@@ -226,19 +226,10 @@ export default function LandingPage() {
 
   const PRICING = [
     {
-      name: "Starter", price: "$49", period: "mo", sub: "Up to 10 team members", featured: false, cta: "Start free trial", href: "/api/auth/slack",
-      features: ["Up to 10 members", "Unlimited requests", "Smart nudges", "30-day audit trail", "Dashboard + CSV", "Email support"],
-    },
-    {
-      name: "Growth", price: "$149", period: "mo", sub: "Up to 50 team members", featured: true, cta: "Start free trial", href: "/api/auth/slack",
-      features: ["Up to 50 members", "Unlimited requests", "Multi-level chains", "1-year audit trail", "Analytics", "Priority support"],
-    },
-    {
-      name: "Scale", price: "$499", period: "mo", sub: "Unlimited team size", featured: false, cta: "Contact us", href: "mailto:mahadbuilds289@gmail.com",
-      features: ["Unlimited members", "Custom workflows", "SSO & security", "Unlimited audit trail", "Dedicated manager", "SLA guarantee"],
+      name: "Beta Access", price: "$0", period: "mo", sub: "Free during beta", featured: true, cta: "Get Free Access", href: "/api/auth/slack",
+      features: ["All features included", "Direct founder support", "Shape the product", "14-day free trial", "No credit card required", "Lock in early pricing"],
     },
   ];
-
  const TESTIMONIALS = [
     { q: "Be one of our first beta users. Get free access, direct founder support, and shape the product from day one.", name: "Beta Access", role: "Free · No credit card · Cancel anytime" },
   ];
