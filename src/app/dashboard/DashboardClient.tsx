@@ -94,7 +94,8 @@ export default function DashboardClient({ requests, userId }: { requests: Reques
           </button>
           <button
             onClick={async () => {
-              const { supabase } = await import("@/lib/supabase-client");
+              const { createClient } = await import("@/lib/supabase-client");
+              const supabase = createClient();
               await supabase.auth.signOut();
               window.location.href = "/";
             }}
