@@ -45,13 +45,13 @@ export default async function DashboardPage() {
   if (!team) {
     const { data: newTeam } = await supabase
       .from("teams")
-      .insert({ 
-        auth_user_id: user.id, 
+      .insert({
+        auth_user_id: user.id,
         plan: "trial",
         slack_workspace_id: `pending_${user.id}`,
         bot_token: "pending"
       })
-      .select("id")
+      .select("id, slack_workspace_id")
       .single();
     team = newTeam;
   }
