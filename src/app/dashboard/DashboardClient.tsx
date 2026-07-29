@@ -13,6 +13,7 @@ type Request = {
 };
 
 export default function DashboardClient({ requests, userId, slackConnected }: { requests: Request[]; userId: string; slackConnected?: boolean }) {
+console.log("slackConnected:", slackConnected);
   const [tab, setTab] = useState("all");
 
   const filtered = requests.filter((r) =>
