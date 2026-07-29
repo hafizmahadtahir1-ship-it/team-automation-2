@@ -12,7 +12,7 @@ type Request = {
   amount?: number;
 };
 
-export default function DashboardClient({ requests, userId }: { requests: Request[]; userId: string }) {
+export default function DashboardClient({ requests, userId, slackConnected }: { requests: Request[]; userId: string; slackConnected?: boolean }) {
   const [tab, setTab] = useState("all");
 
   const filtered = requests.filter((r) =>
@@ -80,12 +80,18 @@ export default function DashboardClient({ requests, userId }: { requests: Reques
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <a
-            href={`https://slack.com/oauth/v2/authorize?client_id=9731924865781.10770998800916&scope=chat:write,commands,users:read&user_scope=&state=${userId}`}
-            className="flex items-center gap-2 bg-[#007a5a] hover:bg-[#005c44] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all"
-          >
-            🔌 Connect Slack
-          </a>
+          {slackConnected ? (
+  <span className="flex items-center gap-2 bg-[#007a5a]/30 text-[#007a5a] text-xs font-semibold px-4 py-2 rounded-lg border border-[#007a5a]/30">
+    ✅ Slack Connected
+  </span>
+) : (
+  <a
+    href={`https://slack.com/oauth/v2/authorize?client_id=9731924865781.10770998800916&scope=chat:write,commands,users:read&user_scope=&state=${userId}`}
+    className="flex items-center gap-2 bg-[#007a5a] hover:bg-[#005c44] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all"
+  >
+    🔌 Connect Slack
+  </a>
+)}
           <button
             onClick={exportCSV}
             className="border border-white/20 text-white/70 hover:text-white hover:border-white/40 text-xs px-4 py-2 rounded-lg transition-all"

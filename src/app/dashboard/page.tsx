@@ -37,7 +37,7 @@ export default async function DashboardPage() {
 // Check if this user has a team linked
   let { data: team } = await supabase
     .from("teams")
-    .select("id")
+    .select("id, slack_workspace_id")
     .eq("auth_user_id", user.id)
     .single();
 
@@ -62,5 +62,5 @@ export default async function DashboardPage() {
     .order("created_at", { ascending: false })
     .limit(50);
 
-  return <DashboardClient requests={requests || []} userId={user!.id} />;
+  return <DashboardClient requests={requests || []} userId={user!.id} slackConnected={!!team?.slack_workspace_id && !team.slack_workspace_id.startsWith("pending")} />;
 }
