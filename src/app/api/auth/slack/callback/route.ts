@@ -28,13 +28,13 @@ export async function GET(req: NextRequest) {
 
   // Save team to DB
   if (userId) {
-    await supabase.from("teams").update({
-      slack_workspace_id: data.team.id,
-      bot_token: data.access_token,
-      slack_access_token: data.access_token,
-      plan: "free",
-      subscription_status: "trialing",
-    }).eq("auth_user_id", userId).eq("bot_token", "pending");
+   await supabase.from("teams").update({
+  slack_workspace_id: data.team.id,
+  bot_token: data.access_token,
+  slack_access_token: data.access_token,
+  plan: "free",
+  subscription_status: "trialing",
+}).eq("auth_user_id", userId);
   } else {
     await supabase.from("teams").upsert({
       slack_workspace_id: data.team.id,
