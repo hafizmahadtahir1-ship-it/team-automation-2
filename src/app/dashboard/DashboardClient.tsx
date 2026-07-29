@@ -32,26 +32,40 @@ export default function DashboardClient({ requests, userId }: { requests: Reques
     return "bg-white/10 text-white/70 border border-white/20";
   };
 
-  const exportCSV = () => {
-    const csv = [
-      ["ID", "Title", "Type", "Status", "Amount", "Created"],
+ const exportCSV = () => {
+    // Properly escape CSV fields: wrap in quotes, double internal quotes
+    const escapeCSV = (value: string | number | undefined) => {
+      const str = String(value ?? "");
+      if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+        return `"${str.replace(/"/g, '""')}"`;
+      }
+      return str;
+    };
+
+    const rows = [
+      ["Request ID", "Title", "Type", "Status", "Amount", "Created"],
       ...filtered.map((r) => [
         r.id,
         r.title,
         r.template_type,
         r.status,
-        r.amount || "",
+        r.amount ?? "",
         new Date(r.created_at).toLocaleDateString(),
       ]),
-    ]
-      .map((row) => row.join(","))
-      .join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
+    ];
+
+    const csv = rows.map((row) => row.map(escapeCSV).join(",")).join("\n");
+
+    // BOM + UTF-8 charset = Excel opens correctly
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "approvals.csv";
+    document.body.appendChild(a);
     a.click();
+    a.remove();
+    URL.revokeObjectURL(url); // Prevent memory leak
   };
 
   return (
