@@ -62,5 +62,7 @@ export default async function DashboardPage() {
     .order("created_at", { ascending: false })
     .limit(50);
 
-  return <DashboardClient requests={requests || []} userId={user!.id} slackConnected={!!team?.slack_workspace_id && !team.slack_workspace_id.startsWith("pending")} />;
+   const slackConnected = !!team?.slack_workspace_id && !team.slack_workspace_id.startsWith("pending");
+  console.log("Team:", team, "SlackConnected:", slackConnected);
+  return <DashboardClient requests={requests || []} userId={user!.id} slackConnected={slackConnected} />;
 }
