@@ -159,12 +159,17 @@ function WaitlistForm() {
     try { await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) }); } catch (_) {}
     setLoading(false); setSent(true);
   };
-  if (sent) return (
-    <div style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: "100px", padding: "14px 28px" }}>
-      <span style={{ color: "#D4AF37" }}>✦</span>
-      <span style={{ color: "#22c55e", fontWeight: 700, fontFamily: "'Syne',sans-serif" }}>You&apos;re on the list!</span>
-    </div>
-  );
+  if (sent) {
+    setTimeout(() => {
+      window.location.href = "/login?signup=true";
+    }, 1500);
+    return (
+      <div style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: "100px", padding: "14px 28px" }}>
+        <span style={{ color: "#D4AF37" }}>✦</span>
+        <span style={{ color: "#22c55e", fontWeight: 700, fontFamily: "'Syne',sans-serif" }}>Redirecting to signup...</span>
+      </div>
+    );
+  }
   return (
     <div>
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center", marginBottom: "12px" }}>
